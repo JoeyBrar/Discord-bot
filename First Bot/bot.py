@@ -6,7 +6,13 @@ from itertools import cycle
 
 intents = discord.Intents.all()
 client = commands.Bot(command_prefix = '.', intents = intents)
-status = cycle(['Minecraft', 'Mincraft'])
+status = cycle(['Minecraft', 'Discord'])
+
+# Errors
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArguments):
+        await ctx.send('Please pass in all required arguments.')
 
 # Startup
 @client.event
@@ -42,4 +48,4 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
-client.run('ODY3NDQyMTUyNDYwMjU1MjQz.YPhKdQ.RkdBftllj1HOwMIVsB5ZIPrk1is')
+client.run('ODY3NDQyMTUyNDYwMjU1MjQz.YPhKdQ.WR9EGUTtQCkaRCgX_lvqW4DyjDE')
