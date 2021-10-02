@@ -5,14 +5,17 @@ import os
 from itertools import cycle
 
 intents = discord.Intents.all()
-client = commands.Bot(command_prefix = '.', intents = intents)
-status = cycle(['Minecraft', 'Discord'])
+client = commands.Bot(command_prefix = '_', intents = intents)
+status = cycle(['_help', 'press _help'])
 
 # Errors
 @client.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArguments):
+async def on_command_error(ctx, error): 
+    if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please pass in all required arguments.')
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f'YOU DONT HAVE PERMISSION TO DO THAT')
+    
 
 # Startup
 @client.event
@@ -24,7 +27,7 @@ async def on_ready():
 async def change_status():
     await client.change_presence(activity = discord.Game(next(status)))
 
-# Cogs
+# Cogs ---------------------------------------------------------------------------------
 @client.command(help = '- Loads cogs.') 
 async def load(ctx, extension): # extension is the cog we want to load.
     try:
@@ -47,5 +50,6 @@ async def reload(ctx, extension):
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
+# --------------------------------------------------------------------------------------
 
-client.run('test')
+client.run('test') 

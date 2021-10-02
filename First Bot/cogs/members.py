@@ -7,14 +7,14 @@ class Members(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        general = client.get_channel(867447669253472320)
+        general = self.client.get_channel(893183349697425468)
         print(f'{member} has joined the server')
         await member.send(f'Welcome, {member}! We hope you enjoy it here!')
         await general.send(f'{member} has joined the chat.')
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
-        general = client.get_channel(867447669253472320)
+        general = self.client.get_channel(893183349697425468)
         print(f'{member} has left the server')
         await general.send(f'{member} has left us.')
 

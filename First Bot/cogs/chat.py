@@ -15,13 +15,14 @@ class Chat(commands.Cog):
                 return
 
     @commands.command(help = '- Clears a certain amount of chat messages.')
+    @commands.has_permissions(manage_messages = True)
     async def clear(self, ctx, amount : int):
         await ctx.channel.purge(limit = amount + 1)
         await ctx.send(f'{amount} messages were removed.', delete_after = 3)
 
     @commands.command(help = '- Check speed.')
     async def ping(self, ctx):
-        await ctx.send(f'Pong! {round(self.client.latency * 1000)}ms')    
+        await ctx.send(f'it is {round(self.client.latency * 1000)}ms')    
 
 def setup(client): 
     client.add_cog(Chat(client))
